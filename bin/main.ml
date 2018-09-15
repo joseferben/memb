@@ -1,5 +1,3 @@
-open Printf
-
 let help = "Invalid argument, use -s <keyword> for searching."
 
 let read_lines name : string list =
@@ -16,18 +14,32 @@ let search_lines lines search =
     (fun a -> BatString.exists a search)
     lines
 
-let printable_lines lines =
+let join_list lines =
   List.fold_left (fun acc s -> acc ^ s ^ "\n") "" lines
 
 let add_line name line =
-  let lines = (printable_lines (read_lines name) ^ line) in
+  let lines = (join_list (read_lines name) ^ line) in
   BatFile.write_lines name (BatEnum.ising lines)
 
-let handleArgs args = match args with
+let handleArgs args path = match args with
     [| |] -> "empty"
-  | [| _; truth |] -> add_line ".memb" truth; "Added truth: " ^ truth
-  | [| _; "-s"; keyword |] -> printable_lines (search_lines (read_lines ".memb") keyword)
+  | [| _; truth |] -> add_line path truth; "Added statement: " ^ truth
+  | [| _; "-s"; keyword |] -> join_list (search_lines (read_lines path) keyword)
   | _ -> help
 
+let filePath () =
+  (Unix.getenv "HOME") ^ "/.memb"
+
+let createFileIfNotExists path =
+  if not (Sys.file_exists path)
+  then let oc = open_out path in
+       Printf.fprintf oc "";
+       close_out oc;
+       true
+  else false
+
 let () =
-  printf "%s" (handleArgs Sys.argv)
+  let path = filePath () in
+  if createFileIfNotExists path
+  then BatPrintf.printf "Created .memb file at %s\n" path;
+  Printf.printf "%s" (handleArgs Sys.argv (filePath ()))
