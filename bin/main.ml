@@ -23,7 +23,7 @@ let add_line name line =
 
 let handleArgs args path = match args with
     [| |] -> "empty"
-  | [| _; truth |] -> add_line path truth; "Added statement: " ^ truth
+  | [| _; truth |] -> add_line path truth; "Added statement: " ^ truth ^ "\n"
   | [| _; "-s"; keyword |] -> join_list (search_lines (read_lines path) keyword)
   | _ -> help
 
