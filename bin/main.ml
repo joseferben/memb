@@ -16,14 +16,18 @@ let search_lines lines search =
     (fun a -> BatString.exists a search)
     lines
 
-let print_lines lines =
+let printable_lines lines =
   List.fold_left (fun acc s -> acc ^ s ^ "\n") "" lines
 
-let parseArgs args = match args with
-    [| |] -> "empty" |
-    [| _; truth |] -> "Adding truth: " ^ truth |
-    [| _; "-s"; keyword |] -> print_lines (search_lines (read_lines ".memb") keyword) |
-    _ -> help
+let add_line name line =
+  let lines = (printable_lines (read_lines name) ^ line) in
+  BatFile.write_lines name (BatEnum.ising lines)
+
+let handleArgs args = match args with
+    [| |] -> "empty"
+  | [| _; truth |] -> add_line ".memb" truth; "Added truth: " ^ truth
+  | [| _; "-s"; keyword |] -> printable_lines (search_lines (read_lines ".memb") keyword)
+  | _ -> help
 
 let () =
-  printf "%s\n" (parseArgs Sys.argv)
+  printf "%s" (handleArgs Sys.argv)
