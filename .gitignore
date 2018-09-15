@@ -2,3 +2,4 @@ _build
 .merlin
 .memb
 *.log
+main.byte

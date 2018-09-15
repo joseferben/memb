@@ -10,7 +10,7 @@ Homepage: https://www.erben.io
 Executable "memb"
   Path: bin
   MainIs: main.ml
-  CompiledObject: best
+  CompiledObject: byte
   BuildDepends:
     core,
     batteries
