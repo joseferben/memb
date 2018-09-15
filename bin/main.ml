@@ -11,13 +11,18 @@ let read_lines name : string list =
     | None -> close_in ic; List.rev acc in
   loop []
 
+let search_lines lines search =
+  List.filter
+    (fun a -> BatString.exists a search)
+    lines
+
 let print_lines lines =
   List.fold_left (fun acc s -> acc ^ s ^ "\n") "" lines
 
 let parseArgs args = match args with
     [| |] -> "empty" |
     [| _; truth |] -> "Adding truth: " ^ truth |
-    [| _; "-s"; _ |] -> print_lines(read_lines ".memb") |
+    [| _; "-s"; keyword |] -> print_lines (search_lines (read_lines ".memb") keyword) |
     _ -> help
 
 let () =
