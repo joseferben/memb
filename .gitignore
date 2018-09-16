@@ -3,3 +3,10 @@ _build
 .memb
 *.log
 main.byte
+
+*.native
+*.byte
+*.docdir
+
+setup.data
+setup.log
