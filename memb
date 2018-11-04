@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+
+cd $(dirname $0)
+
+usage() {
+    echo "Usage: $0 <operation>"
+    echo ""
+    echo ""
+    echo " Example usage: search for keywords 'untar' and 'zip'"
+    echo "    memb untar zip"
+    echo ""
+    echo " add <sentence>"
+    echo "    Add <sentence> to the knowledge base."
+    echo ""
+    echo " delete <line>"
+    echo "    Remove sentence at <line> from the knowledge base."
+    echo ""
+    exit 1
+}
+
+MEMB_FILE=$HOME/.memb
+case $1 in
+    add)
+        echo $2 >> $MEMB_FILE
+        ;;
+    delete)
+        sed -i $2d $MEMB_FILE
+        ;;
+    *)
+        if [ -z "$1" ]; then
+            usage
+        else
+            grep --color=always -ni "$1" $MEMB_FILE
+        fi
+esac
