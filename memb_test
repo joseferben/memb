@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -e
+
+cd $(dirname $0)
+
+echo "Running test suite"
+echo ""
+
+MEMB_FILE=$HOME/.memb
+
+TESTS_RAN=0
+# Helpers
+assertEq() {
+    TESTS_RAN=$((TESTS_RAN+1))
+    if [ "$1" -eq "$2" ]; then
+        echo "ok"
+    else
+        echo "failed, expected $2 but got $1"
+        tearDown
+    fi
+}
+
+assertNotEmpty() {
+    TESTS_RAN=$((TESTS_RAN+1))
+    if [ -z "$1" ]; then
+        echo "failed, $1 was expected to be empty but was not empty"
+        tearDown
+    else
+        echo "ok"
+    fi
+}
+
+tearDown() {
+    rm $MEMB_FILE
+    exit 1
+}
+
+# Tests
+echo "add sentence appends sentence"
+. ./memb -a "Test sentence"
+assertNotEmpty "$(./memb "Test sentence")"
+assertNotEmpty "$(./memb "Test")"
+assertNotEmpty "$(./memb "TesT")"
+assertNotEmpty "$(./memb "TEST")"
+assertNotEmpty "$(./memb "ST")"
+assertNotEmpty "$(./memb "sT")"
+
+echo "search for existing keyword yields result"
+assertEq "$(./memb "Test" | wc -l)" "1"
+
+echo "search for non-existing keyword yields empty result"
+assertEq "$(./memb "Foobar" | wc -l)" "0"
+
+echo "delete first line decrements line number"
+LINE_NUMBERS_BEFORE=$(./memb "Test sentence" | wc -l)
+. ./memb -d 1
+LINE_NUMBERS_AFTER=$(./memb "Test sentence" | wc -l)
+DIFF=$(expr $LINE_NUMBERS_BEFORE - $LINE_NUMBERS_AFTER)
+assertEq "$DIFF" "1"
+
+echo "Successfully ran all $TESTS_RAN tests"
+exit 0

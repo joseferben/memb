@@ -11,10 +11,13 @@ usage() {
     echo " Example usage: search for keywords 'untar' and 'zip'"
     echo "    memb untar zip"
     echo ""
-    echo " add <sentence>"
+    echo " -a <sentence>"
     echo "    Add <sentence> to the knowledge base."
     echo ""
-    echo " delete <line>"
+    echo " -p"
+    echo "    Print the content of the knowledge base."
+    echo ""
+    echo " -d <line>"
     echo "    Remove sentence at <line> from the knowledge base."
     echo ""
     exit 1
@@ -22,11 +25,15 @@ usage() {
 
 MEMB_FILE=$HOME/.memb
 case $1 in
-    add)
+    -a)
         echo $2 >> $MEMB_FILE
         ;;
-    delete)
+    -p)
+        cat -n $MEMB_FILE
+        ;;
+    -d)
         sed -i $2d $MEMB_FILE
+        echo "Removed line number $2"
         ;;
     *)
         if [ -z "$1" ]; then
