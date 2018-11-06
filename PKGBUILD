@@ -7,7 +7,7 @@ pkgdesc="A tool to manage a local text-based knowledge base"
 url="https://github.com/jerben/memb"
 arch=('any')
 license=('MIT')
-depends=('grep')
+depends=('grep' 'sed')
 source=("https://github.com/jerben/memb/archive/$pkgver.tar.gz")
 sha256sums=('e849d1889e4002611547f3a2fed60caead8f70a9ae8677f03610585088c3686c')
 

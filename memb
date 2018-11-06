@@ -32,8 +32,13 @@ case $1 in
         cat -n $MEMB_FILE
         ;;
     -d)
-        sed -i $2d $MEMB_FILE
-        echo "Removed line number $2"
+        re='^[0-9]+$'
+        if ! [[ $2 =~ $re ]] ; then
+            echo "You have to pass in an integer"; exit 1
+        else
+            sed --follow-symlinks -i $2d $MEMB_FILE
+            echo "Removed line number $2"
+        fi
         ;;
     *)
         if [ -z "$1" ]; then
