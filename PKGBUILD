@@ -3,7 +3,7 @@
 pkgname=memb
 pkgver=0.0.1
 pkgrel=1
-pkgdesc="A tool to manage a local knowledge base"
+pkgdesc="A tool to manage a local text-based knowledge base"
 url="https://github.com/jerben/memb"
 arch=('any')
 license=('MIT')
@@ -18,8 +18,6 @@ check() {
 
 package() {
   cd "${pkgname}-${pkgver}"
-
-  install -Dm0755 memb "${pkgdir}/usr/bin/memb"
+  install -Dm0755 memb "$pkgdir/usr/bin/memb"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
-
-# vim:set ts=2 sw=2 et:
