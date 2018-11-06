@@ -4,6 +4,8 @@ set -e
 
 cd $(dirname $0)
 
+VERSION=0.0.5
+
 usage() {
     echo "Usage: $0 <operation>"
     echo ""
@@ -20,11 +22,17 @@ usage() {
     echo " -d <line>"
     echo "    Remove sentence at <line> from the knowledge base."
     echo ""
+    echo " -v"
+    echo "    Print current version."
+    echo ""
     exit 1
 }
 
 MEMB_FILE=$HOME/.memb
 case $1 in
+    -v)
+        echo $VERSION
+        ;;
     -a)
         echo $2 >> $MEMB_FILE
         ;;

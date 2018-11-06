@@ -1,0 +1,4 @@
+language: minimal
+
+script:
+  - ./memb_test
