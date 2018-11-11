@@ -19,14 +19,16 @@ assertEq() {
     else
         echo "failed, expected $2 but got $1"
         tearDown
+        exit 1
     fi
 }
 
 assertNotEmpty() {
     TESTS_RAN=$((TESTS_RAN+1))
     if [ -z "$1" ]; then
-        echo "failed, $1 was expected to be empty but was not empty"
+        echo "failed, $1 was expected to be not empty but was empty"
         tearDown
+        exit 1
     else
         echo "ok"
     fi
@@ -34,7 +36,6 @@ assertNotEmpty() {
 
 tearDown() {
     rm $MEMB_FILE
-    exit 1
 }
 
 # Tests

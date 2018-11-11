@@ -28,11 +28,16 @@ usage() {
     exit 1
 }
 
-if [ "$ENV" = "TEST" ] ; then
-    MEMB_FILE=./.memb-testfile
-else
-    MEMB_FILE=$HOME/.memb
-fi
+initialize() {
+    ENV=${ENV-"PRODUCTION"}
+    if [ "$ENV" = "TEST" ] ; then
+        MEMB_FILE=./.memb-testfile
+    else
+        MEMB_FILE=$HOME/.memb
+    fi
+}
+
+initialize
 
 case $1 in
     -v)
