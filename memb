@@ -28,7 +28,12 @@ usage() {
     exit 1
 }
 
-MEMB_FILE=$HOME/.memb
+if [ "$ENV" = "TEST" ] ; then
+    MEMB_FILE=./.memb-testfile
+else
+    MEMB_FILE=$HOME/.memb
+fi
+
 case $1 in
     -v)
         echo $VERSION

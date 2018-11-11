@@ -7,7 +7,8 @@ cd $(dirname $0)
 echo "Running test suite"
 echo ""
 
-MEMB_FILE=$HOME/.memb
+export ENV="TEST"
+MEMB_FILE=./.memb-testfile
 
 TESTS_RAN=0
 # Helpers
@@ -58,6 +59,8 @@ LINE_NUMBERS_BEFORE=$(./memb "Test sentence" | wc -l)
 LINE_NUMBERS_AFTER=$(./memb "Test sentence" | wc -l)
 DIFF=$(expr $LINE_NUMBERS_BEFORE - $LINE_NUMBERS_AFTER)
 assertEq "$DIFF" "1"
+
+tearDown
 
 echo "Successfully ran all $TESTS_RAN tests"
 exit 0
