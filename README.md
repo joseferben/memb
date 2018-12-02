@@ -1,6 +1,6 @@
 # Memb [![Build Status](https://travis-ci.org/jerben/memb.svg?branch=master)](https://travis-ci.org/jerben/memb)
 
-A simplistic cli for managing a local text-base knowledge base.
+A cli for managing a local text-base knowledge base.
 
 ## Installation
 
