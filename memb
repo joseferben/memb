@@ -4,7 +4,7 @@ set -e
 
 cd $(dirname $0)
 
-VERSION=0.0.5
+VERSION=0.0.6
 
 usage() {
     echo "Usage: $0 <operation>"
