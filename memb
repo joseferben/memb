@@ -51,11 +51,16 @@ case $1 in
         ;;
     -d)
         re='^[0-9]+$'
-        if ! [[ $2 =~ $re ]] ; then
+        if ! [[ $2 =~ $re ]]; then
             echo "You have to pass in an integer"; exit 1
         else
-            sed --follow-symlinks -i $2d $MEMB_FILE
-            echo "Removed line number $2"
+            number_of_lines=$(wc -l < $MEMB_FILE)
+            if ((number_of_lines >= $2)); then
+                sed --follow-symlinks -i $2d $MEMB_FILE
+                echo "Removed line number $2"
+            else
+                echo "There is no line number $2"
+            fi
         fi
         ;;
     *)
