@@ -9,7 +9,7 @@ arch=('any')
 license=('MIT')
 depends=('grep' 'sed', 'wc')
 source=("https://github.com/jerben/memb/archive/$pkgver.tar.gz")
-sha256sums=('d266cc918fd4e7246d2f96706a42dfce2ea7e58c697625e229af295921b8b4a7')
+sha256sums=('d0cde7a76728d3a80ac4d859f5bfe22389992939cc960fd4fca923c96b3c4e99')
 
 check() {
   cd "${pkgname}-${pkgver}"
